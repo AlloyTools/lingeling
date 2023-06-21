@@ -11705,7 +11705,7 @@ static int lgldelaying (LGL * lgl, const char * name, int * delptr) {
 }
 
 static int lglsimpleprobe (LGL * lgl) {
-  int deltarem, nunits, hbrs, neqs, oldrem = lglrem (lgl);
+  int deltarem, nunits, hbrs, oldrem = lglrem (lgl);
   int lit, success, nvars;
 
   if (lgldelaying (lgl, "simpleprobe",
@@ -11726,7 +11726,7 @@ static int lglsimpleprobe (LGL * lgl) {
   lgldense (lgl, 0);
   lglsimpleprobeinit (lgl);
   lglsetprbsimplelim (lgl);
-  neqs = hbrs = nunits = 0;
+  hbrs = nunits = 0;
 
   nvars = lgl->nvars;
   NEW (lgl->sprb->spes, 2*nvars);
@@ -11743,7 +11743,7 @@ static int lglsimpleprobe (LGL * lgl) {
     if (lgl->mt) break;
     hbrs += lglsimpleprobeimpls (lgl);
     if (lgl->mt) break;
-    neqs += lglsimpleprobeqs (lgl);
+    lglsimpleprobeqs (lgl);
     if (!lglflush (lgl)) break;
     if (lglterminate (lgl)) break;
     if (!lglsyncunits (lgl)) break;
